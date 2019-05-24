@@ -4,7 +4,9 @@
 set -e
 
 # build
-npm run build
+rm -rf ./dist
+npm run helloworld
+npm run buildapart
 
 # navigate into the build output directory
 cd dist
