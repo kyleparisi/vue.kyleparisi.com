@@ -12,7 +12,7 @@ npm run heffer
 cd dist
 
 # if you are deploying to a custom domain
-# echo 'vue.kyleparisi.com' > CNAME
+echo 'vue.kyleparisi.com' > CNAME
 
 git init
 git add -A
