@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "buildapart": "vue-cli-service build --target lib --name buildapart --no-clean ./src/buildapart.js",
+    "heffer": "vue-cli-service build --target lib --name heffer --no-clean ./src/heffer.js",
     "helloworld": "vue-cli-service build --target lib --name helloworld --no-clean ./src/index.js"
   },
   "dependencies": {
