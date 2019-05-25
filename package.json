@@ -5,8 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "buildapart": "vue-cli-service build --target lib --name buildapart --no-clean ./src/components/buildapart.js",
-    "helloworld": "vue-cli-service build --target lib --name helloworld --no-clean ./src/components/index.js"
+    "buildapart": "vue-cli-service build --target lib --name buildapart --no-clean ./src/buildapart.js",
+    "helloworld": "vue-cli-service build --target lib --name helloworld --no-clean ./src/index.js"
   },
   "dependencies": {
     "core-js": "^2.6.5",
