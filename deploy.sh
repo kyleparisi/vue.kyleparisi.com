@@ -6,7 +6,7 @@ set -e
 # build
 rm -rf ./dist
 npm run helloworld
-npm run buildapart
+npm run heffer
 
 # navigate into the build output directory
 cd dist
