@@ -9,6 +9,7 @@
     right: 0,
   };
   export default {
+    name: "Banner",
     props: {
       position: {
         type: String,

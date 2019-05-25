@@ -1,5 +1,5 @@
 import Vue from "vue";
-import HelloWorld from "./HelloWorld.vue";
+import HelloWorld from "./components/HelloWorld.vue";
 
 const Components = {
   HelloWorld

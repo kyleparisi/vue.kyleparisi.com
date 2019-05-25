@@ -28,7 +28,6 @@
       <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
     </ul>
 
-    <Banner>This is a banner!</Banner>
   </div>
 </template>
 
