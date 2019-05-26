@@ -2,6 +2,7 @@ import Vue from "vue";
 import _ from "lodash";
 import App from "./App.vue";
 
+window.Vue = Vue;
 Vue.config.productionTip = false;
 Object.defineProperty(Vue.prototype, "_", { value: _ });
 
