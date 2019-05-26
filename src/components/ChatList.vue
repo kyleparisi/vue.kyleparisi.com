@@ -2,7 +2,7 @@
   <div>
     <div
       class="overflow-y-scroll"
-      style="height: calc(100vh - 53px);"
+      :style="{'height': 'calc(' + chatHeight + 'px - 56px)'}"
       v-if="!_.isEmpty(chats)"
     >
       <div v-for="achat in chats" class="bb" style="border-color: #c5c5c5">
