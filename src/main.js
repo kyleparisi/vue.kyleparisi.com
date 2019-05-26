@@ -11,10 +11,12 @@ _.defaults(window.data, {
   chat: false,
   chats: {},
   online: [],
-  loading: true,
+  loading: false,
   text: "",
   typing: [],
-  chatHeight: 400
+  chatHeight: 400,
+  loadedOldestMessage: false,
+  newMessageId: false
 });
 
 new Vue({

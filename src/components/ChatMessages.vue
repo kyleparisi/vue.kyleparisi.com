@@ -178,3 +178,15 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+  .fs14 {
+    font-size: 14px;
+  }
+  .message-time div {
+    display: none;
+  }
+  .message-time:hover div {
+    display: block;
+  }
+</style>
