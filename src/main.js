@@ -20,3 +20,5 @@ _.defaults(window.data, {
 new Vue({
   render: h => h(App)
 }).$mount("#app");
+
+require("./chat.test.js");
