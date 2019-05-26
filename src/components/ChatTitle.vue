@@ -17,7 +17,7 @@
 
       <div class="pointer" @click="$emit('chat-title-clicked')">
         <div class="ttc pb1">{{ _.get(chat, "title", "") }}</div>
-        <div class="fw2 f6 flex items-center">
+        <div class="fw2 f6 flex items-center" v-if="chat.users">
           <!-- Online Status -->
           <div
             class="br-100 bg-green ba b--white mr1"
@@ -29,8 +29,17 @@
             class="br-100 bg-red ba b--white mr1"
             style="width: 10px; height: 10px;"
             title="offline"
-            v-if="withUsers.length && online.indexOf(withUsers[0]) === -1"
+            v-if="online.indexOf(withUsers[0]) === -1"
           ></div>
+          <div class="ttc pr1">{{ chat.users[withUsers[0]].name }}</div>
+          <div
+            v-show="
+              typing.indexOf(withUsers[0] + '_' + chat.key) !== -1 &&
+                online.indexOf(withUsers[0]) !== -1
+            "
+          >
+            is typing...
+          </div>
         </div>
       </div>
     </div>
@@ -44,7 +53,9 @@ export default {
   },
   computed: {
     withUsers: function() {
-      return _.keys(_.get(this, "chat.users", {})).filter(id => id !== this._.get(this, "chat.you"));
+      return _.keys(_.get(this, "chat.users", {})).filter(
+        id => id !== this._.get(this, "chat.you")
+      );
     }
   }
 };
