@@ -43,7 +43,6 @@
 </template>
 
 <script>
-import groupMessages from "../chat";
 
 export default {
   data() {
@@ -52,15 +51,7 @@ export default {
   methods: {
     selectChat(chat) {
       this.chat = chat;
-      groupMessages();
-      // scroll to bottom since new chat selected
-      this.$nextTick(() => {
-        this.hideSideNavigation = true;
-        const messagesEl = document.getElementById("messages");
-        if (messagesEl) {
-          messagesEl.scrollTop = messagesEl.scrollHeight;
-        }
-      });
+      this.hideSideNavigation = true;
     }
   }
 };

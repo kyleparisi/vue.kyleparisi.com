@@ -68,6 +68,7 @@ function fakeChat(key) {
     chat_id: "1",
     user_id: "2"
   });
+  groupMessages();
   await Vue.nextTick();
   console.assert(
     document.getElementById("new_messages") !== null,

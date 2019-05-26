@@ -66,4 +66,5 @@ function groupMessages() {
   groupMessagesByUser(messages);
 }
 
+window.groupMessages = groupMessages;
 export default groupMessages;

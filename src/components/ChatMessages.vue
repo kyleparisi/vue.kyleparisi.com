@@ -2,6 +2,7 @@
   <div>
     <div
       id="messages"
+      ref="messagesEl"
       class="pb2 overflow-y-scroll"
       style="padding-top: 58px; -webkit-overflow-scrolling: touch; word-wrap: break-word;"
       v-on:scroll="handleScroll($event)"
@@ -133,6 +134,14 @@ const thisYearFormat = {
 export default {
   data() {
     return window.data;
+  },
+  watch: {
+    "chat": function () {
+      if (!this.$refs.messagesEl) {
+        return;
+      }
+      this.$refs.messageEl.scrollTop = this.$refs.messagesEl.scrollHeight;
+    }
   },
   computed: {
     withUsers: function() {
