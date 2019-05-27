@@ -3,8 +3,8 @@
     <div
       id="messages"
       ref="messagesEl"
-      class="pb2 overflow-y-scroll"
-      style="padding-top: 58px; -webkit-overflow-scrolling: touch; word-wrap: break-word;"
+      class="pv2 overflow-y-scroll"
+      style="-webkit-overflow-scrolling: touch; word-wrap: break-word;"
       v-on:scroll="handleScroll($event)"
       @click="$emit('close-chat-list')"
       v-if="!loading && _.get(chat, 'messages', []).length"
@@ -197,5 +197,8 @@ export default {
   }
   .message-time:hover div {
     display: block;
+  }
+  .bg-passive {
+    background-color: #f9fafb;
   }
 </style>
