@@ -49,7 +49,6 @@ import ChatInput from "./ChatInput";
 import ChatList from "./ChatList";
 import ChatMessages from "./ChatMessages";
 import ChatTitle from "./ChatTitle";
-import groupMessages from "../chat";
 
 export default {
   name: "Chat",
@@ -61,9 +60,6 @@ export default {
     ChatMessages,
     ChatInput,
     ChatList
-  },
-  watch: {
-    'chat.messages': groupMessages
   }
 };
 </script>

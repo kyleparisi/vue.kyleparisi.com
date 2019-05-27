@@ -125,6 +125,7 @@
 
 <script>
 import _ from "lodash";
+import groupMessages from "../chat";
 
 const thisYearFormat = {
   weekday: "long",
@@ -141,6 +142,10 @@ export default {
         return;
       }
       this.$refs.messageEl.scrollTop = this.$refs.messagesEl.scrollHeight;
+      groupMessages();
+    },
+    "chat.read": function() {
+      groupMessages();
     }
   },
   computed: {
