@@ -64,6 +64,9 @@ export default {
     ChatMessages,
     ChatInput,
     ChatList
+  },
+  mounted() {
+    this.chatHeight = this.$el.parentElement.clientHeight;
   }
 };
 </script>
