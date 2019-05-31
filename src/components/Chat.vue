@@ -29,7 +29,7 @@
             v-on:open-chat-list="$emit('open-chat-list')"
             v-on:chat-title-clicked="$emit('chat-title-clicked')"
           ></chat-title>
-          <div :style="{ height: 'calc(' + chatHeight + 'px - 56px - 52px)' }">
+          <div class="overflow-y-scroll" :style="{ height: 'calc(' + chatHeight + 'px - 56px - 52px)' }">
             <chat-messages
               v-on:close-chat-list="$emit('close-chat-list')"
               v-on:get-older-messages="$emit('get-older-messages')"
