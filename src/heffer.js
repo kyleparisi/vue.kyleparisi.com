@@ -12,7 +12,9 @@ _.defaults(window.data, {
   loading: true,
   text: "",
   typing: [],
-  chatHeight: 400
+  chatHeight: 400,
+  loadedOldestMessage: false,
+  newMessageId: false
 });
 
 const Components = {
