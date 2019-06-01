@@ -55,6 +55,10 @@ export default {
 </script>
 
 <style scoped>
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
   .bg-brand2 {
     background-color: #b6b6b6;
   }
