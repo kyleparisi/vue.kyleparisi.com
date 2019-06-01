@@ -15,7 +15,7 @@
         </div>
       </div>
 
-      <div @click="visitProject">
+      <div @click="visitProject" v-if="chat">
         <div class="ttc pb1">{{ chat.title }}</div>
         <div class="fw2 f6 flex items-center" v-if="online.length">
           <!-- Online Status -->
