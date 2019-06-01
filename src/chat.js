@@ -1,5 +1,3 @@
-import _ from "lodash";
-
 function storeNewMessageFlagIfNeeded(messages) {
   data.newMessageId = false;
   if (!messages || !messages.length) {

@@ -113,7 +113,6 @@
 </template>
 
 <script>
-import _ from "lodash";
 import groupMessages from "../chat";
 
 const thisYearFormat = {
