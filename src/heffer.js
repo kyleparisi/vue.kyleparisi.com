@@ -1,6 +1,4 @@
-import Vue from "vue";
 import Chat from "./components/Chat.vue";
-import _ from 'lodash';
 
 Object.defineProperty(Vue.prototype, "_", { value: _ });
 
