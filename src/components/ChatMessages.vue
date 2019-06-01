@@ -2,11 +2,10 @@
   <div>
     <div
       id="messages"
-      ref="messagesEl"
-      class="pv2 overflow-y-scroll"
-      style="-webkit-overflow-scrolling: touch; word-wrap: break-word;"
+      class="pb2 overflow-y-scroll"
+      style="padding-top: 58px; height: calc(100vh - 53px); -webkit-overflow-scrolling: touch; word-wrap: break-word;"
       v-on:scroll="handleScroll($event)"
-      @click="$emit('close-chat-list')"
+      @click="closeChatListIfOpen"
       v-if="!loading && _.get(chat, 'messages', []).length"
     >
       <div
@@ -17,12 +16,7 @@
       </div>
 
       <!-- Chat Body -->
-      <div
-        class="ph2"
-        :key="message.id"
-        v-for="message in chat.messages"
-        v-show="!loading"
-      >
+      <div class="ph2" v-for="message in chat.messages" v-show="!loading">
         <!-- Day Divider -->
         <div v-if="message.addDayDivider">
           <hr style="border: 1px #e7e7e8 solid" />
@@ -65,7 +59,7 @@
           </div>
           <div>
             <!-- New Message Flag -->
-            <div class="tc" v-show="newMessageId">
+            <div class="tc" v-show="newMessageId !== false">
               <div
                 id="new_messages"
                 class="tc light-red br4 ph2 fs12 ba center dib"
@@ -111,13 +105,8 @@
       </div>
     </div>
     <div v-else>
-      <div class="w-100 dt">
-        <div
-          class="dtc v-mid tc gray"
-          :style="{ height: 'calc(' + chatHeight + 'px - 56px - 52px)' }"
-        >
-          Starting a conversation 🎉
-        </div>
+      <div class="w-100 dt" style="height: calc(100vh - 40px - 51px);">
+        <div class="dtc v-mid tc gray">Starting a conversation 🎉</div>
       </div>
     </div>
   </div>
@@ -136,18 +125,6 @@ export default {
   data() {
     return window.data;
   },
-  watch: {
-    "chat": function () {
-      if (!this.$refs.messagesEl) {
-        return;
-      }
-      this.$refs.messageEl.scrollTop = this.$refs.messagesEl.scrollHeight;
-      groupMessages();
-    },
-    "chat.read": function() {
-      groupMessages();
-    }
-  },
   computed: {
     withUsers: function() {
       return _.keys(this.chat.users).filter(id => id !== this.chat.you);
@@ -157,6 +134,23 @@ export default {
     }
   },
   methods: {
+    sendMessage: function() {
+      if (!this.text) {
+        return false;
+      }
+      Api.chat
+        .sendMessage(this.chat.key, this.text)
+        .then(() => {
+          this.text = "";
+        })
+        .catch(() => {
+          this.newMessageId = false;
+        });
+      const messagesEl = document.getElementById("messages");
+      if (messagesEl) {
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+      }
+    },
     parseTime: function(time) {
       const day = new Date(time * 1000);
       // set to midnight
@@ -174,36 +168,64 @@ export default {
       }
       return day.toLocaleDateString("en-US", thisYearFormat);
     },
+    updateRead: function() {
+      Api.chat
+        .updateRead(this.chat.key)
+        .then(console.log)
+        .catch(console.log);
+    },
     handleScroll: function(e) {
       if (this.loadedOldestMessage) {
         return false;
       }
       this.scrollTop = e.target.scrollTop;
-      if (this.scrollTop) {
-        return false;
+      if (!this.scrollTop) {
+        console.log("Load older messages.");
+        const messagesEl = document.getElementById("messages");
+        const originalScrollHeight = messagesEl.scrollHeight;
+        const id = this._.keys(this._.keyBy(this.chat.messages, "id"))[0];
+        Api.chat
+          .getOlderMessages(this.chat.key, id)
+          .then(res => res.data)
+          .then(data => {
+            if (data.success) {
+              console.log(data.message);
+              this.loadedOldestMessage = true;
+              return false;
+            }
+            const messages = data.concat(this.chats[this.chat.key].messages);
+            this.chats[this.chat.key].messages = messages;
+            groupMessages();
+            this.$nextTick(function() {
+              const scrollDiff =
+                messagesEl.scrollHeight - originalScrollHeight;
+              console.log("Scroll diff", scrollDiff);
+              messagesEl.scrollTop += scrollDiff;
+            });
+          });
       }
-      const messagesEl = document.getElementById("messages");
-      const originalScrollHeight = messagesEl.scrollHeight;
-      const oldestMessageId = this._.keys(
-        this._.keyBy(this.chat.messages, "id")
-      )[0];
-      this.$emit("get-older-messages", oldestMessageId);
+    },
+    closeChatListIfOpen() {
+      const el = document.getElementById('side-navigation');
+      if (el.classList.value.indexOf('dn') === -1) {
+        el.classList.toggle('dn');
+      }
     }
   }
 };
 </script>
 
 <style scoped>
-  .fs14 {
-    font-size: 14px;
-  }
-  .message-time div {
-    display: none;
-  }
-  .message-time:hover div {
-    display: block;
-  }
-  .bg-passive {
-    background-color: #f9fafb;
-  }
+.fs14 {
+  font-size: 14px;
+}
+.message-time div {
+  display: none;
+}
+.message-time:hover div {
+  display: block;
+}
+.bg-passive {
+  background-color: #f9fafb;
+}
 </style>

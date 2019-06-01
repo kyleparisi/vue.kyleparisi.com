@@ -1,50 +1,32 @@
 <template>
-  <div class="ba b--light-gray w-100">
-    <div class="relative h-100">
-      <div id="chat-list" class="absolute h-100">
-        <div
-          class="relative h-100 dn db-l bg-passive2 z-2"
-          style="width: 268px"
-          id="side-navigation"
-        >
-          <div class="w-100 cf bb" style="border-color: rgb(197, 197, 197);">
-            <div class="fl pl3 ttu" style="line-height: 55px">Chats</div>
-            <div
-              class="fr pa3 pointer fw6 db dn-l"
-              @click="$emit('close-chat-list')"
-            >
-              X
-            </div>
-          </div>
-
-          <chat-list
-            v-on:select-chat="$emit('select-chat', $event)"
-          ></chat-list>
-        </div>
-      </div>
-
-      <div class="main-padding">
-        <div class="bg-passive">
-          <chat-title
-            v-on:open-chat-list="$emit('open-chat-list')"
-            v-on:chat-title-clicked="$emit('chat-title-clicked')"
-          ></chat-title>
-          <div class="overflow-y-scroll" :style="{ height: 'calc(' + chatHeight + 'px - 56px - 52px)' }">
-            <chat-messages
-              v-on:close-chat-list="$emit('close-chat-list')"
-              v-on:get-older-messages="$emit('get-older-messages')"
-            ></chat-messages>
-          </div>
-          <div style="height: 52px">
-            <chat-input
-              v-on:send-message="$emit('send-message')"
-              v-on:update-read="$emit('update-read')"
-              v-on:typing="$emit('typing')"
-            ></chat-input>
+  <div>
+    <nav id="chat-list">
+      <div
+        class="fixed h-100 dn db-l bg-passive2 z-2"
+        style="width: 268px"
+        id="side-navigation"
+      >
+        <div class="w-100 cf bb" style="border-color: rgb(197, 197, 197);">
+          <div class="fl pl3 ttu" style="line-height: 55px">Chats</div>
+          <div
+            class="fr pa3 pointer fw6 db dn-l"
+            onclick="document.getElementById('side-navigation').classList.toggle('dn')"
+          >
+            X
           </div>
         </div>
+
+        <ChatList></ChatList>
       </div>
-    </div>
+    </nav>
+
+    <main class="main-padding">
+      <div id="chat" class="min-vh-100 bg-passive">
+        <ChatTitle></ChatTitle>
+        <ChatMessages></ChatMessages>
+        <ChatInput></ChatInput>
+      </div>
+    </main>
   </div>
 </template>
 
@@ -65,8 +47,9 @@ export default {
     ChatInput,
     ChatList
   },
-  mounted() {
-    this.chatHeight = this.$el.parentElement.clientHeight;
+  watch: {
+    chat: groupMessages,
+    "chat.read": groupMessages
   }
 };
 </script>

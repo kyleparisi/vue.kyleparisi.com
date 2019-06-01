@@ -51,11 +51,6 @@ function fakeChat(key) {
     },
     messages: []
   };
-  // console.log("Test: Don't send message when no text.");
-  // console.assert(
-  //   chat.sendMessage() === false,
-  //   "Send message should return false when no message."
-  // );
 
   console.log("Test: First message received.");
   window.data.chat.messages.push({

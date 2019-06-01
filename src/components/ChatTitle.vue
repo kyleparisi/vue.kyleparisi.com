@@ -1,23 +1,23 @@
 <template>
   <div>
     <div
-      class="relative w-100 bb pa2 z-1 bg-passive"
-      style="border-color: gainsboro;height: 56px"
+      class="fixed w-100 bb pa2 z-1 bg-passive pointer"
+      style="border-color: gainsboro"
     >
       <div class="fl" style="height: 38px;">
         <div
           class="db dn-l f3 pointer black"
           style="line-height: 38px; width:
         37px"
-          @click="$emit('open-chat-list')"
+          onclick="document.getElementById('side-navigation').classList.toggle('dn')"
         >
           ☰
         </div>
       </div>
 
-      <div class="pointer" @click="$emit('chat-title-clicked')">
-        <div class="ttc pb1">{{ _.get(chat, "title", "") }}</div>
-        <div class="fw2 f6 flex items-center" v-if="chat.users">
+      <div @click="visitProject">
+        <div class="ttc pb1">{{ chat.title }}</div>
+        <div class="fw2 f6 flex items-center" v-if="online.length">
           <!-- Online Status -->
           <div
             class="br-100 bg-green ba b--white mr1"
@@ -29,7 +29,7 @@
             class="br-100 bg-red ba b--white mr1"
             style="width: 10px; height: 10px;"
             title="offline"
-            v-if="online.indexOf(withUsers[0]) === -1"
+            v-else
           ></div>
           <div class="ttc pr1">{{ chat.users[withUsers[0]].name }}</div>
           <div
@@ -57,6 +57,17 @@ export default {
         id => id !== this._.get(this, "chat.you")
       );
     }
+  },
+  methods: {
+    visitProject: function() {
+      window.parent.location.href = this.chat.url;
+    }
   }
 };
 </script>
+
+<style>
+  .bg-passive {
+    background-color: #f9fafb;
+  }
+</style>

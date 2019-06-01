@@ -1,5 +1,5 @@
 <template>
-  <div class="absolute main-padding bottom-0 left-0 w-100">
+  <div class="main-padding fixed bottom-0 left-0 w-100">
     <div class="pa2 bg-passive bt" style="border-color: gainsboro;">
       <label for="message" class="dn">Chat input</label>
       <input
@@ -26,6 +26,15 @@ export default {
 </script>
 
 <style scoped>
+  .main-padding {
+    padding-left: 0;
+  }
+
+  @media screen and (min-width: 60em) {
+    .main-padding {
+      padding-left: 268px;
+    }
+  }
   .input {
     padding: 0.5rem;
     background-color: #eee;
