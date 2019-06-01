@@ -24,7 +24,7 @@
       </div>
 
       <div class="main-padding">
-        <div id="chat" class="bg-passive">
+        <div class="bg-passive">
           <chat-title
             v-on:open-chat-list="$emit('open-chat-list')"
             v-on:chat-title-clicked="$emit('chat-title-clicked')"
