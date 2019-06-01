@@ -35,7 +35,7 @@
               v-on:get-older-messages="$emit('get-older-messages')"
             ></chat-messages>
           </div>
-          <div>
+          <div style="height: 52px">
             <chat-input
               v-on:send-message="$emit('send-message')"
               v-on:update-read="$emit('update-read')"
