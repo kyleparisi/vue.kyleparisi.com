@@ -2,7 +2,7 @@
   <div>
     <div class="overflow-y-scroll" style="height: calc(100vh - 53px);" v-if="!_.isEmpty(chats)">
       <div v-for="achat in chats" class="bb" style="border-color: #c5c5c5">
-        <a class="link" href="javascript:void(0)" @click="selectChat(achat)">
+        <a class="link unstyle" href="javascript:void(0)" @click="selectChat(achat)">
           <div
                   class="pl3 dim"
                   style="height: 62px; line-height: 62px; border-color: rgba(255, 255, 255, .25);"
@@ -55,7 +55,7 @@ export default {
 </script>
 
 <style scoped>
-  a {
+  .unstyle {
     text-decoration: none;
     color: inherit;
   }
