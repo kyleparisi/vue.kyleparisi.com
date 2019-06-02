@@ -83,9 +83,9 @@ const ChatInput = {
       type="text"
       placeholder="Message..."
       v-model="text"
-      v-on:keyup.enter="$emit('send-message')"
-      v-on:keyup.esc="$emit('update-read')"
-      v-on:keyup="$emit('typing')"
+      v-on:keyup.enter="sendMessage"
+      v-on:keyup.esc="updateRead"
+      v-on:keyup="sendTypingEvent"
       autocomplete="off"
     />
   </div>
@@ -93,6 +93,39 @@ const ChatInput = {
   name: "ChatInput",
   data() {
     return window.data;
+  },
+  methods: {
+    sendMessage: function() {
+      if (!this.text) {
+        return false;
+      }
+      Api.chat
+        .sendMessage(this.chat.key, this.text)
+        .then(() => {
+          this.text = "";
+        })
+        .catch(() => {
+          this.newMessageId = false;
+        });
+      const messagesEl = document.getElementById("messages");
+      if (messagesEl) {
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+      }
+    },
+    updateRead: function() {
+      Api.chat
+        .updateRead(this.chat.key)
+        .then(console.log)
+        .catch(console.log);
+    },
+    throttleTyping: this._.throttle(function() {
+      window.socket.emit("typing", this.chat.key);
+    }, 1000),
+    sendTypingEvent: function() {
+      if (this.text) {
+        this.throttleTyping();
+      }
+    }
   }
 };
 
