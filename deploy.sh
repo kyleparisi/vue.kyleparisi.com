@@ -6,7 +6,7 @@ set -e
 # build
 rm -rf ./dist
 mkdir dist
-cp Chat.js Chat.css index.html dist/
+cp Chat.js Chat.css Chat.test.js index.html dist/
 
 # navigate into the build output directory
 cd dist
