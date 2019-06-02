@@ -1,0 +1,40 @@
+.bg-passive {
+    background-color: #f9fafb;
+}
+
+.bg-passive2 {
+    background-color: #e7e7e8;
+}
+
+.bg-brand2 {
+    background-color: #b6b6b6;
+}
+
+.main-padding {
+    padding-left: 0;
+}
+
+@media screen and (min-width: 60em) {
+    .main-padding {
+        padding-left: 268px;
+    }
+}
+
+.input {
+    padding: 0.5rem;
+    background-color: #eee;
+    width: 100%;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border-color: rgba(0, 0, 0, 0.1);
+    border-style: solid;
+    border-width: 1px;
+}
+
+.message-time div {
+    display: none;
+}
+
+.message-time:hover div {
+    display: block;
+}

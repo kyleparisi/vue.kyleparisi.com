@@ -5,8 +5,7 @@ set -e
 
 # build
 rm -rf ./dist
-npm run helloworld
-npm run heffer
+cp Chat.js Chat.css index.html dist/
 
 # navigate into the build output directory
 cd dist

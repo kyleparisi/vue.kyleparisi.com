@@ -29,7 +29,9 @@ function fakeChat(key) {
   };
 }
 
-(async () => {
+$(document).ready(async () => {
+  new Vue({ el: "#chat" });
+
   await Vue.nextTick();
   data.chat = {
     title: "test chat",
@@ -149,4 +151,4 @@ function fakeChat(key) {
     ...data.chats,
     ...fiftyChats
   };
-})();
+});

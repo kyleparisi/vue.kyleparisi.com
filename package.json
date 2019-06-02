@@ -2,39 +2,7 @@
   "name": "my-vue-library",
   "version": "0.1.0",
   "private": true,
-  "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "heffer": "vue-cli-service build --target lib --name heffer --no-clean ./src/heffer.js",
-    "helloworld": "vue-cli-service build --target lib --name helloworld --no-clean ./src/index.js"
-  },
-  "dependencies": {
-    "core-js": "^2.6.5",
-    "vue": "^2.6.10"
-  },
-  "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.7.0",
-    "@vue/cli-service": "^3.7.0",
-    "vue-template-compiler": "^2.5.21"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended"
-    ],
-    "rules": {}
-  },
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {}
-    }
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions"
-  ]
+  "scripts": {},
+  "dependencies": {},
+  "devDependencies": {}
 }
