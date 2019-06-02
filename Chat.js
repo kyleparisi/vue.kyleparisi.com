@@ -135,6 +135,7 @@ const ChatList = {
   methods: {
     selectChat(chat) {
       this.chat = chat;
+      this.loadedOldestMessage = false;
       groupMessages();
       // scroll to bottom since new chat selected
       this.$nextTick(() => {
