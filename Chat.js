@@ -111,6 +111,7 @@ const ChatInput = {
       if (messagesEl) {
         messagesEl.scrollTop = messagesEl.scrollHeight;
       }
+      this.updateRead();
     },
     updateRead: function() {
       Api.chat
