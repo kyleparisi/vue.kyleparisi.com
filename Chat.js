@@ -120,7 +120,9 @@ const ChatInput = {
         .catch(console.log);
     },
     throttleTyping: this._.throttle(function() {
-      window.socket.emit("typing", this.chat.key);
+      if (this._.get(this, "chat.key", false)) {
+        window.socket.emit("typing", this.chat.key);
+      }
     }, 1000),
     sendTypingEvent: function() {
       if (this.text) {
