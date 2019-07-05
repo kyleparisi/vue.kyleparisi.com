@@ -1,0 +1,21 @@
+th.sticky-header {
+    position: sticky;
+    top: -1px;
+    background-color: white;
+}
+
+.shadow-light2 {
+    box-shadow: 0 1px 1px rgba(50, 50, 93, 0.11);
+}
+
+.striped--brand-gray:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.striped--brand-gray:nth-child(odd) {
+    background-color: white;
+}
+
+.hover-row:hover {
+    background-color: #fffceb;
+}
