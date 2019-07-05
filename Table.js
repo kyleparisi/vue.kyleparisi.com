@@ -274,7 +274,7 @@ Vue.component("table-component", {
         <div class="flex items-center f6 pv3" v-if="pages.length >= 2">
 
             <!-- Per Page Option -->
-            <div class="w-third pl2">
+            <div class="w-25 pl2">
                 <div class="dib link black ph3 pv2 ba br2 b--brand-light-gray pointer">
                     <div class="dim" @click="expandPerPageOption = !expandPerPageOption">
                         <span class="pr3 pb2">{{ pageSize }}</span> <i class="fa fa-chevron-down"></i>
@@ -287,7 +287,7 @@ Vue.component("table-component", {
             </div>
 
             <!-- Page selector -->
-            <div class="w-third tc">
+            <div class="w-50 tc">
                 <div class="dib overflow-hidden ba br2 b--brand-light-gray" v-if="pages.length >= 2">
                     <nav class="cf">
                         <div class="fl dib link dim black ph3 pv2 br b--brand-light-gray pointer" @click="previousPage" title="Previous"><span class="fa fa-chevron-left"></span></div>
@@ -309,7 +309,7 @@ Vue.component("table-component", {
                 </div>
             </div>
 
-            <div class="w-third">&nbsp;</div>
+            <div class="w-25">&nbsp;</div>
         </div>
 
         <slot/>
