@@ -271,7 +271,7 @@ Vue.component("table-component", {
         </table>
 
         <!-- Pagination -->
-        <div class="flex items-center f6 pv3" v-if="pages.length >= 2">
+        <div class="flex items-center f6 pv3 bg-white" v-if="pages.length >= 2">
 
             <!-- Per Page Option -->
             <div class="w-25 pl2">
