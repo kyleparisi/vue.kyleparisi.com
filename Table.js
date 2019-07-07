@@ -250,7 +250,7 @@ Vue.component("table-component", {
             </template>
 
             <!-- For UX reasons: put in empty rows on no data -->
-            <template v-if="!sortedData.length">
+            <template v-if="!_.size(sortedData)">
                 <tr v-for="i in 10" :key="i" class="striped--brand-gray">
                     <td class="pa2" v-for="_ in columns">
                         <div>&nbsp;</div>
@@ -259,8 +259,8 @@ Vue.component("table-component", {
             </template>
 
             <!-- For UX reasons: put in empty rows on little data -->
-            <template v-if="sortedData.length && sortedData.length < 10">
-                <tr class="striped--brand-gray" :key="i.id" v-for="i in Math.abs(10 - sortedData.length)">
+            <template v-if="_.size(sortedData) && _.size(sortedData) < 10">
+                <tr class="striped--brand-gray" :key="i.id" v-for="i in Math.abs(10 - _.size(sortedData))">
                     <td class="pa2" v-for="_ in columns">
                         <div>&nbsp;</div>
                     </td>
