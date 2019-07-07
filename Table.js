@@ -232,7 +232,7 @@ Vue.component("table-component", {
             </tr>
 
             <!-- Body -->
-            <template v-if="sortedData.length">
+            <template v-if="_.size(sortedData)">
                 <template v-for="row in _.chunk(sortedData, pageSize)[page - 1]">
                     <tr @click="rowClicked(_.get(row, rowIdMap, false))" class="striped--brand-gray hover-row">
                         <td class="pa2 tc" v-for="column in columns">
