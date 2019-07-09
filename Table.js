@@ -233,14 +233,14 @@ Vue.component("table-component", {
 
             <!-- Body -->
             <template v-if="_.size(sortedData)">
-                <template v-for="row in _.chunk(sortedData, pageSize)[page - 1]">
+                <template v-for="(row, row_id) in _.chunk(sortedData, pageSize)[page - 1]">
                     <tr @click="rowClicked(_.get(row, rowIdMap, false))" class="striped--brand-gray hover-row">
                         <td class="pa2 tc" v-for="column in columns">
                             <input title="select" type="checkbox" v-if="column === 'checkbox'" v-model="row.selected" @click.stop="">
 
                             <component :is="dynamicComponents[column]" v-if="_.get(dynamicComponents, column)" :row="row" :column="column"></component>
 
-                            <div :class="_.get(cellStyleMapping, column)" v-else-if="_.get(mapping, column)">
+                            <div class="truncate mw6" :class="_.get(cellStyleMapping, column)" v-else-if="_.get(mapping, column)" v-on:dblclick="cellSelected(row_id, column)">
                                 {{ _.get(formatMapping, column) ? formatMapping[column](_.get(row, mapping[column])) : _.get(row, mapping[column]) }}
                             </div>
                         </td>
@@ -338,7 +338,10 @@ Vue.component("table-component", {
       isHoveringCloseIndex: false,
 
       // views
-      selectViewModal: false
+      selectViewModal: false,
+
+      // inputs
+      inputCell: false
     };
   },
   computed: {
@@ -463,6 +466,9 @@ Vue.component("table-component", {
       window.data.activeView = view;
       view.set();
       this.selectViewModal = false;
+    },
+    cellSelected: function (row_id, column) {
+      this.inputCell = this.inputCell ? false : row_id + ":" + column;
     }
   }
 });
