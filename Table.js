@@ -241,7 +241,12 @@ Vue.component("table-component", {
                             <component :is="dynamicComponents[column]" v-if="_.get(dynamicComponents, column)" :row="row" :column="column"></component>
 
                             <div class="truncate mw6" :class="_.get(cellStyleMapping, column)" v-else-if="_.get(mapping, column)" v-on:dblclick="cellSelected(row_id, column)">
-                                {{ _.get(formatMapping, column) ? formatMapping[column](_.get(row, mapping[column])) : _.get(row, mapping[column]) }}
+                                <div v-if="inputCell !== row_id + ':' + column">
+                                  {{ _.get(formatMapping, column) ? formatMapping[column](_.get(row, mapping[column])) : _.get(row, mapping[column]) }}
+                                </div>
+                                <div v-else>
+                                  <input v-model="_.get(row, mapping[column])">
+                                </div>
                             </div>
                         </td>
                     </tr>
