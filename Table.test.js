@@ -1,4 +1,5 @@
 data.mapping = {
+  id: "id",
   name: "name",
   age: "age",
   location: "address",
@@ -8,6 +9,7 @@ data.mapping = {
 data.gridColumns = Object.keys(data.mapping);
 for (let i = 0; i <= 1000; i++) {
   data.gridData.push({
+    id: i,
     name: faker.name.findName(),
     age: faker.random.number({
       min: 18,
