@@ -350,6 +350,9 @@ Vue.component("table-component", {
       inputCell: false
     };
   },
+  mounted: function() {
+    this.calculateCellAlignments();
+  },
   computed: {
     pages: {
       get: function() {
@@ -396,21 +399,8 @@ Vue.component("table-component", {
       }
       this.search(val);
     },
-    data: function (rows) {
-      // Scan first row for value types and assign cell alignments
-      for (let i = 0; i < 1; i++) {
-        Object.keys(rows[i]).map(key => {
-          const column = _.invert(this.mapping)[key];
-          // cell alignments
-          switch (typeof rows[i][key]) {
-            case "number":
-              this.cellAlignments[column] = "tr";
-              break;
-            default:
-              this.cellAlignments[column] = "tl";
-          }
-        })
-      }
+    data: function () {
+      this.calculateCellAlignments();
     }
   },
   props: {
@@ -492,6 +482,26 @@ Vue.component("table-component", {
     },
     cellSelected: function (row_id, column) {
       this.inputCell = this.inputCell ? false : row_id + ":" + column;
+    },
+    calculateCellAlignments: function () {
+      if (!this.data.length) {
+        return false;
+      }
+      const rows = this.data;
+      // Scan first row for value types and assign cell alignments
+      for (let i = 0; i < 1; i++) {
+        Object.keys(rows[i]).map(key => {
+          const column = _.invert(this.mapping)[key];
+          // cell alignments
+          switch (typeof rows[i][key]) {
+            case "number":
+              this.cellAlignments[column] = "tr";
+              break;
+            default:
+              this.cellAlignments[column] = "tl";
+          }
+        })
+      }
     }
   }
 });
