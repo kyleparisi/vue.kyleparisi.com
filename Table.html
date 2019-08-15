@@ -42,6 +42,8 @@
         :columns="gridColumns"
         :mapping="mapping"
         :filter-mapping="filterMapping"
+        :cell-style-mapping="cellStyleMapping"
+        :heading-style-mapping="headingStyleMapping"
         v-else
       ></table-component>
     </div>
@@ -61,7 +63,9 @@
         gridData: [],
         gridColumns: [],
         mapping: {},
-        filterMapping: {}
+        filterMapping: {},
+        cellStyleMapping: {},
+        headingStyleMapping: {}
       };
       new Vue({
         el: "#table",

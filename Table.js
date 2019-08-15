@@ -216,7 +216,7 @@ Vue.component("table-component", {
                         <input title="select all" class="dtc" type="checkbox" v-model="allSelected" :indeterminate.prop="indeterminate">
                     </div>
 
-                    <div class="dt w-100 tc" v-else>
+                    <div class="dt w-100" :class="_.get(headingStyleMapping, key) || 'tl'" v-else>
                         <div class="dtc" @click.self="sortBy(_.get(mapping, key))">{{ key.replace(/_/g, " ") }}</div>
                         <div class="dtc pl1 v-mid" @click.self="sortBy(_.get(mapping, key))" v-show="sortKey && sortKey === _.get(mapping, key)">
                             <i class="fa o-40"
@@ -240,7 +240,7 @@ Vue.component("table-component", {
 
                             <component :is="dynamicComponents[column]" v-if="_.get(dynamicComponents, column)" :row="row" :column="column"></component>
 
-                            <div :class="_.get(cellStyleMapping, column)" v-else-if="_.get(mapping, column)" v-on:dblclick="cellSelected(row_id, column)">
+                            <div :class="_.get(cellStyleMapping, column) || _.get(cellAlignments, column)" v-else-if="_.get(mapping, column)" v-on:dblclick="cellSelected(row_id, column)">
                                 <div class="truncate mw6" v-if="inputCell !== row_id + ':' + column">
                                   {{ _.get(formatMapping, column) ? formatMapping[column](_.get(row, mapping[column])) : _.get(row, mapping[column]) }}
                                 </div>
@@ -333,6 +333,7 @@ Vue.component("table-component", {
       expandPerPageOption: false,
       pageSizes: [10, 20, 50, 100],
       clicked: [],
+      cellAlignments: {},
 
       // filters
       addFilterModal: false,
@@ -394,6 +395,22 @@ Vue.component("table-component", {
         return false;
       }
       this.search(val);
+    },
+    data: function (rows) {
+      // Scan first row for value types and assign cell alignments
+      for (let i = 0; i < 1; i++) {
+        Object.keys(rows[i]).map(key => {
+          const column = _.invert(this.mapping)[key];
+          // cell alignments
+          switch (typeof rows[i][key]) {
+            case "number":
+              this.cellAlignments[column] = "tr";
+              break;
+            default:
+              this.cellAlignments[column] = "tl";
+          }
+        })
+      }
     }
   },
   props: {
@@ -404,6 +421,7 @@ Vue.component("table-component", {
     expandedRowComponent: String,
     formatMapping: Object,
     cellStyleMapping: Object,
+    headingStyleMapping: Object,
     filterMapping: Object,
     search: Function,
     searchTerm: String,
