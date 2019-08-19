@@ -216,7 +216,7 @@ Vue.component("table-component", {
                         <input title="select all" class="dtc" type="checkbox" v-model="allSelected" :indeterminate.prop="indeterminate">
                     </div>
 
-                    <div class="dt w-100" :class="_.get(headingStyleMapping, key) || 'tl'" v-else>
+                    <div class="dt w-100" :class="_.get(headingStyleMapping, key) || _.get(cellAlignments, key) || 'tl'" v-else>
                         <div class="dtc" @click.self="sortBy(_.get(mapping, key))">{{ key.replace(/_/g, " ") }}</div>
                         <div class="dtc pl1 v-mid" @click.self="sortBy(_.get(mapping, key))" v-show="sortKey && sortKey === _.get(mapping, key)">
                             <i class="fa o-40"
