@@ -75,7 +75,7 @@ Vue.component("table-component", {
                                 <perfect-scrollbar class="w5" style="max-height: 200px;">
 
                                     <template v-if="!filterTypeView">
-                                        <div class="pa3 lh-copy dim pointer pv2 bb b--brand-light-gray cf" v-for="(filter, key) in filterMapping" @click='filterTypeView = _.get(filterMapping, key, "")'>
+                                        <div class="pa3 lh-copy dim pointer pv2 bb b--near-black cf" v-for="(filter, key) in filterMapping" @click='filterTypeView = _.get(filterMapping, key, "")'>
                                             <div class="fl w-90">{{ filter.name }}</div> <div class="fr w-10"><i class="fa fa-chevron-right tr"></i></div>
                                         </div>
                                     </template>
@@ -180,7 +180,7 @@ Vue.component("table-component", {
                         {{ activeView.name }} View
                         <i class="fa fa-times-circle pointer pl2 w1 v-mid emphasizeClickable reverse-dim" @click="activeView.unset"></i>
                     </div>
-                    <div v-else :class="{'ph3 bl b--brand-light-gray': _.size(filterMapping) }" @click="selectViewModal = !selectViewModal">
+                    <div v-else :class="{'ph3 bl b--near-black': _.size(filterMapping) }" @click="selectViewModal = !selectViewModal">
                         <i class="fa fa-layer-group blue pa2 pointer dim"></i>
                         <div class="dib f6 gray dim pointer pv2">Views</div>
                     </div>
@@ -189,7 +189,7 @@ Vue.component("table-component", {
                     <transition name="scale-in-tl">
                         <div class="absolute card-shadow z-2 bg-black white br1" v-show="selectViewModal" v-shortkey="['esc']" @shortkey="selectViewModal = false">
                             <perfect-scrollbar class="w5" style="max-height: 200px;">
-                                <div class="pa3 lh-copy dim pointer pv2 bb b--brand-light-gray cf" v-for="view in viewMapping">
+                                <div class="pa3 lh-copy dim pointer pv2 bb b--near-black cf" v-for="view in viewMapping">
                                     <div @click="selectView(view)">{{ view.name }}</div>
                                 </div>
                             </perfect-scrollbar>
@@ -280,7 +280,7 @@ Vue.component("table-component", {
 
             <!-- Per Page Option -->
             <div class="w-25 pl2">
-                <div class="dib link black ph3 pv2 ba br2 b--brand-light-gray pointer">
+                <div class="dib link black ph3 pv2 ba br2 b--near-black pointer">
                     <div class="dim" @click="expandPerPageOption = !expandPerPageOption">
                         <span class="pr3 pb2">{{ pageSize }}</span> <i class="fa fa-chevron-down"></i>
                     </div>
@@ -293,15 +293,15 @@ Vue.component("table-component", {
 
             <!-- Page selector -->
             <div class="w-50 tc">
-                <div class="dib overflow-hidden ba br2 b--brand-light-gray" v-if="pages.length >= 2">
+                <div class="dib overflow-hidden ba br2 b--near-black" v-if="pages.length >= 2">
                     <nav class="cf">
-                        <div class="fl dib link dim black ph3 pv2 br b--brand-light-gray pointer" @click="previousPage" title="Previous"><span class="fa fa-chevron-left"></span></div>
+                        <div class="fl dib link dim black ph3 pv2 br b--near-black pointer" @click="previousPage" title="Previous"><span class="fa fa-chevron-left"></span></div>
                         <div class="fr dib link dim black ph3 pv2 pointer" @click="nextPage" title="Next"><span class="fa fa-chevron-right"></span></div>
 
                         <div class="overflow-hidden center dt tc">
                             <template v-for="n in paginationLayout">
                                 <div
-                                        class="dtc ph3 pv2 br b--brand-light-gray"
+                                        class="dtc ph3 pv2 br b--near-black"
                                         :class="{ 'blue': page === n, 'pointer dim link': n !== '...' }"
                                         @click="jumpToPage(n)"
                                         :title="'Page '+ n"
