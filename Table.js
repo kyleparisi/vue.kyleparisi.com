@@ -39,7 +39,8 @@ Vue.component("loading-table-rows", {
 });
 
 Vue.component("table-component", {
-  template: `<div class="overflow-auto">
+  template: `<div>
+    <div class="overflow-auto">
         <!-- Table filter -->
         <div class="bg-white bt b--light-gray pa2" v-if="_.size(filterMapping) || _.size(viewMapping)">
             <div class="flex items-center">
@@ -274,7 +275,10 @@ Vue.component("table-component", {
 
             </tbody>
         </table>
+    </div>
 
+    <!-- Table Footer -->
+    <div>
         <!-- Pagination -->
         <div class="flex items-center f6 pv3 bg-white" v-if="pages.length >= 2">
 
@@ -318,7 +322,8 @@ Vue.component("table-component", {
         </div>
 
         <slot/>
-    </div>`,
+    </div>
+</div>`,
   data() {
     return {
       // table settings
