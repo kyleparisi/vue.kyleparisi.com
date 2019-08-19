@@ -39,7 +39,7 @@ Vue.component("loading-table-rows", {
 });
 
 Vue.component("table-component", {
-  template: `    <div>
+  template: `<div class="overflow-auto">
         <!-- Table filter -->
         <div class="bg-white bt b--light-gray pa2" v-if="_.size(filterMapping) || _.size(viewMapping)">
             <div class="flex items-center">
