@@ -350,7 +350,7 @@ Vue.component("table-component", {
       inputCell: false
     };
   },
-  beforeMounted: function() {
+  beforeMount: function() {
     this.calculateCellAlignments();
   },
   computed: {
