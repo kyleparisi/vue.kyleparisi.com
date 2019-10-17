@@ -246,7 +246,7 @@ Vue.component("table-component", {
                                   {{ _.get(formatMapping, column) ? formatMapping[column](_.get(row, mapping[column])) : _.get(row, mapping[column]) }}
                                 </div>
                                 <div v-else>
-                                  <input v-model="_.get(row, mapping[column])">
+                                  <input v-model="editableCell">
                                 </div>
                             </div>
                         </td>
@@ -391,6 +391,24 @@ Vue.component("table-component", {
           selected: true
         }).length;
         return numberSelected !== this.sortedData.length && numberSelected > 0;
+      }
+    },
+    editableCell: {
+      get: function () {
+        const keys = this.inputCell.split(":");
+        const index = keys[0];
+        const column = keys[1];
+        const row = _.get(this.sortedData, index);
+        const path = this.mapping[column];
+        return this._.get(row, path);
+      },
+      set: function (newValue) {
+        const keys = this.inputCell.split(":");
+        const index = keys[0];
+        const column = keys[1];
+        const row = _.get(this.sortedData, index);
+        const path = this.mapping[column];
+        return this._.set(row, path, newValue);
       }
     }
   },
