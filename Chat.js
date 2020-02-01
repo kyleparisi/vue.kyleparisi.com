@@ -183,7 +183,7 @@ const ChatList = {
     <div v-for="achat in _.filter(chats, 'hasUnreadMessages')"  class="bb b" style="border-color: #c5c5c5">
       <ChatListItem :achat="achat"></ChatListItem>
     </div>
-    <div v-for="achat in _.filter(chats, 'hasUnreadMessages')" class="bb" style="border-color: #c5c5c5">
+    <div v-for="achat in _.filter(chats, chat => _.get(chat, 'hasUnreadMessages', false) === false)" class="bb" style="border-color: #c5c5c5">
       <ChatListItem :achat="achat"></ChatListItem>
     </div>
   </div>
