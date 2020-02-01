@@ -13,6 +13,7 @@ function storeNewMessageFlagIfNeeded(messages) {
       messages[i].user_id !== data.chat.you
     ) {
       data.newMessageId = messages[i].id;
+      data.chat.hasUnreadMessages = true;
       break;
     }
   }
@@ -65,6 +66,16 @@ function groupMessages() {
 }
 
 window.groupMessages = groupMessages;
+
+function findChatsWithNewMessages() {
+  const chats = _.get(window, "data.chats", false);
+  if (!chats) {
+    return false;
+  }
+  _.forEach(chats, chat => {
+    storeNewMessageFlagIfNeeded(chat.messages)
+  })
+}
 
 const thisYearFormat = {
   weekday: "long",
@@ -132,35 +143,48 @@ const ChatInput = {
   }
 };
 
+const ChatListItem = {
+  template: `
+<a class="link unstyle" href="javascript:void(0)" @click="selectChat(achat)">
+  <div
+          class="pl3 dim"
+          style="height: 62px; line-height: 62px; border-color: rgba(255, 255, 255, .25);"
+  >
+    <div class="fl">
+      <img
+              class="v-mid w2 br-100"
+              :src="achat.image_url"
+              alt=""
+              v-if="achat.image_url"
+      />
+      <div class="flex items-center" style="height: 62px" v-else>
+        <div class="br-100 w2 h2 v-mid bg-black"></div>
+      </div>
+    </div>
+    <span class="fl pl2 ttc w-80 truncate">{{ achat.title }}</span>
+    <div
+            v-if="chat.key === achat.key"
+            class="fr bg-brand2 h-100"
+            style="width: 6px;transform: translateX(-1px)"
+    ></div>
+  </div>
+</a>
+  `,
+  data() {
+    return window.data
+  },
+  props: ['achat']
+};
+
 const ChatList = {
   template: `
 <div>
   <div class="overflow-y-scroll" style="height: calc(100vh - 53px);" v-if="!_.isEmpty(chats)">
-    <div v-for="achat in chats" class="bb" style="border-color: #c5c5c5">
-      <a class="link unstyle" href="javascript:void(0)" @click="selectChat(achat)">
-        <div
-                class="pl3 dim"
-                style="height: 62px; line-height: 62px; border-color: rgba(255, 255, 255, .25);"
-        >
-          <div class="fl">
-            <img
-                    class="v-mid w2 br-100"
-                    :src="achat.image_url"
-                    alt=""
-                    v-if="achat.image_url"
-            />
-            <div class="flex items-center" style="height: 62px" v-else>
-              <div class="br-100 w2 h2 v-mid bg-black"></div>
-            </div>
-          </div>
-          <span class="fl pl2 ttc w-80 truncate">{{ achat.title }}</span>
-          <div
-                  v-if="chat.key === achat.key"
-                  class="fr bg-brand2 h-100"
-                  style="width: 6px;transform: translateX(-1px)"
-          ></div>
-        </div>
-      </a>
+    <div v-for="achat in _.filter(chats, ['hasUnreadMessages', true])"  class="bb b" style="border-color: #c5c5c5">
+      <ChatListItem :achat="achat"></ChatListItem>
+    </div>
+    <div v-for="achat in _.filter(chats, ['hasUnreadMessages', false])" class="bb" style="border-color: #c5c5c5">
+      <ChatListItem :achat="achat"></ChatListItem>
     </div>
   </div>
 </div>`,
@@ -182,6 +206,9 @@ const ChatList = {
         }
       });
     }
+  },
+  components: {
+    ChatListItem
   }
 };
 
@@ -497,7 +524,8 @@ const Chat = {
   },
   watch: {
     chat: groupMessages,
-    "chat.read": groupMessages
+    "chat.read": groupMessages,
+    chats: findChatsWithNewMessages
   }
 };
 

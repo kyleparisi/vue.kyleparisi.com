@@ -24,6 +24,7 @@ type chat = {
   // id of user
   owner: string
   read: string
+  hasUnreadMessages: boolean
   users: {
     [id: string] : user
   }

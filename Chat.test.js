@@ -12,6 +12,7 @@ function fakeChat(key) {
     image_url: faker.image.imageUrl(),
     owner: "1",
     read: "0",
+    hasUnreadMessages: faker.random.boolean(),
     key,
     users: {
       "1": {
