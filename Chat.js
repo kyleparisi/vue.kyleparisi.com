@@ -513,8 +513,7 @@ const Chat = {
   },
   watch: {
     chat: groupMessages,
-    "chat.read": groupMessages,
-    chats: findChatsWithNewMessages
+    "chat.read": groupMessages
   }
 };
 
