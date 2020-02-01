@@ -180,10 +180,10 @@ const ChatList = {
   template: `
 <div>
   <div class="overflow-y-scroll" style="height: calc(100vh - 53px);" v-if="!_.isEmpty(chats)">
-    <div v-for="achat in _.filter(chats, ['hasUnreadMessages', true])"  class="bb b" style="border-color: #c5c5c5">
+    <div v-for="achat in _.filter(chats, 'hasUnreadMessages')"  class="bb b" style="border-color: #c5c5c5">
       <ChatListItem :achat="achat"></ChatListItem>
     </div>
-    <div v-for="achat in _.filter(chats, ['hasUnreadMessages', false])" class="bb" style="border-color: #c5c5c5">
+    <div v-for="achat in _.filter(chats, 'hasUnreadMessages')" class="bb" style="border-color: #c5c5c5">
       <ChatListItem :achat="achat"></ChatListItem>
     </div>
   </div>
