@@ -13,7 +13,6 @@ function storeNewMessageFlagIfNeeded(messages) {
       messages[i].user_id !== data.chat.you
     ) {
       data.newMessageId = messages[i].id;
-      data.chat.hasUnreadMessages = true;
       break;
     }
   }
@@ -66,16 +65,6 @@ function groupMessages() {
 }
 
 window.groupMessages = groupMessages;
-
-function findChatsWithNewMessages() {
-  const chats = _.get(window, "data.chats", false);
-  if (!chats) {
-    return false;
-  }
-  _.forEach(chats, chat => {
-    storeNewMessageFlagIfNeeded(chat.messages)
-  })
-}
 
 const thisYearFormat = {
   weekday: "long",
