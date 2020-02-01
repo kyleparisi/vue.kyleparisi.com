@@ -173,7 +173,22 @@ const ChatListItem = {
   data() {
     return window.data
   },
-  props: ['achat']
+  props: ['achat'],
+  methods: {
+    selectChat(chat) {
+      this.chat = chat;
+      this.loadedOldestMessage = false;
+      groupMessages();
+      // scroll to bottom since new chat selected
+      this.$nextTick(() => {
+        document.getElementById("side-navigation").classList.toggle("dn");
+        const messagesEl = document.getElementById("messages");
+        if (messagesEl) {
+          messagesEl.scrollTop = messagesEl.scrollHeight;
+        }
+      });
+    }
+  },
 };
 
 const ChatList = {
@@ -191,21 +206,6 @@ const ChatList = {
   name: "ChatList",
   data() {
     return window.data;
-  },
-  methods: {
-    selectChat(chat) {
-      this.chat = chat;
-      this.loadedOldestMessage = false;
-      groupMessages();
-      // scroll to bottom since new chat selected
-      this.$nextTick(() => {
-        document.getElementById("side-navigation").classList.toggle("dn");
-        const messagesEl = document.getElementById("messages");
-        if (messagesEl) {
-          messagesEl.scrollTop = messagesEl.scrollHeight;
-        }
-      });
-    }
   },
   components: {
     ChatListItem
