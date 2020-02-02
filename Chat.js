@@ -425,28 +425,27 @@ const ChatTitle = {
 
     <div @click="visitProject" v-if="chat">
       <div class="ttc pb1">{{ chat.title }}</div>
-      <div class="fw2 f6 flex items-center" v-if="online.length">
-        <!-- Online Status -->
-        <div
-          class="br-100 bg-green ba b--white mr1"
-          style="width: 10px; height: 10px;"
-          title="active"
-          v-if="online.indexOf(withUsers[0]) !== -1"
-        ></div>
-        <div
-          class="br-100 bg-red ba b--white mr1"
-          style="width: 10px; height: 10px;"
-          title="offline"
-          v-else
-        ></div>
-        <div class="ttc pr1">{{ chat.users[withUsers[0]].name }}</div>
-        <div
-          v-show="
-            typing.indexOf(withUsers[0] + '_' + chat.key) !== -1 &&
-              online.indexOf(withUsers[0]) !== -1
-          "
-        >
-          is typing...
+      <div class="fw2 f6 flex items-center">
+        <div class="flex items-center" v-for="user in user_states">
+          <!-- Online Status -->
+          <div
+            class="br-100 bg-green ba b--white mr1"
+            style="width: 10px; height: 10px;"
+            title="active"
+            v-if="user.online"
+          ></div>
+          <div
+            class="br-100 bg-red ba b--white mr1"
+            style="width: 10px; height: 10px;"
+            title="offline"
+            v-else
+          ></div>
+          <div class="ttc pr1">{{ user.name }}</div>
+          <div
+            v-show="user.typing"
+          >
+            is typing...
+          </div>
         </div>
       </div>
     </div>
@@ -461,6 +460,20 @@ const ChatTitle = {
       return _.keys(_.get(this, "chat.users", {})).filter(
         id => id !== this._.get(this, "chat.you")
       );
+    },
+    user_states: function () {
+      const withUsers = this.withUsers;
+      const states = withUsers.map(user_id => {
+        const typing = this.typing.indexOf(withUsers[user_id] + '_' + chat.key) !== -1 &&
+            this.online.indexOf(withUsers[user_id]) !== -1;
+        const online = this.online.indexOf(withUsers[user_id]) !== -1
+        return {
+          typing: typing,
+          online: online,
+          name: this.chat.users[parseInt(user_id)].name
+        }
+      });
+      return states;
     }
   },
   methods: {
