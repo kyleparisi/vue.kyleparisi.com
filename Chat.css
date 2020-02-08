@@ -43,3 +43,7 @@ a {
 .message-time:hover div {
     display: block;
 }
+
+.sticky {
+    position: sticky;
+}

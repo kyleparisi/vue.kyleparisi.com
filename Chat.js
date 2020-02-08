@@ -410,10 +410,10 @@ const ChatTitle = {
   template: `
 <div>
   <div
-    class="fixed w-100 bb pa2 z-1 bg-passive pointer"
-    style="border-color: gainsboro"
+    class="main-padding fixed w-100 bb pa2 z-1 bg-passive pointer"
+    style="border-color: gainsboro; height: 56px"
   >
-    <div class="fl" style="height: 38px;">
+    <div class="fl pl2" style="height: 38px;">
       <div
         class="db dn-l f3 pointer black"
         style="line-height: 38px; width: 37px"
@@ -423,28 +423,30 @@ const ChatTitle = {
       </div>
     </div>
 
-    <div @click="visitProject" v-if="chat">
-      <div class="ttc pb1">{{ chat.title }}</div>
-      <div class="fw2 f6 flex items-center">
-        <div class="flex items-center" v-for="user in user_states">
-          <!-- Online Status -->
-          <div
-            class="br-100 bg-green ba b--white mr1"
-            style="width: 10px; height: 10px;"
-            title="active"
-            v-if="user.online"
-          ></div>
-          <div
-            class="br-100 bg-red ba b--white mr1"
-            style="width: 10px; height: 10px;"
-            title="offline"
-            v-else
-          ></div>
-          <div class="ttc pr1">{{ user.name }}</div>
-          <div
-            v-show="user.typing"
-          >
-            is typing...
+    <div class="pl3" @click="visitProject" v-if="chat">
+      <div class="">
+        <div class="ttc pb1">{{ chat.title }}</div>
+        <div class="fw2 f6 flex items-center">
+          <div class="flex items-center" v-for="user in user_states">
+            <!-- Online Status -->
+            <div
+              class="br-100 bg-green ba b--white mr1"
+              style="width: 10px; height: 10px;"
+              title="active"
+              v-if="user.online"
+            ></div>
+            <div
+              class="br-100 bg-red ba b--white mr1"
+              style="width: 10px; height: 10px;"
+              title="offline"
+              v-else
+            ></div>
+            <div class="ttc pr1">{{ user.name }}</div>
+            <div
+              v-show="user.typing"
+            >
+              is typing...
+            </div>
           </div>
         </div>
       </div>
@@ -506,9 +508,10 @@ const Chat = {
     </div>
   </nav>
 
+  <ChatTitle></ChatTitle>
+
   <main class="main-padding">
     <div id="chat" class="min-vh-100 bg-passive">
-      <ChatTitle></ChatTitle>
       <ChatMessages></ChatMessages>
       <ChatInput></ChatInput>
     </div>

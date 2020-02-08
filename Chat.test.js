@@ -9,7 +9,7 @@ function randomMessage() {
 function fakeChat(key) {
   return {
     title: faker.random.words(5),
-    image_url: faker.image.imageUrl(),
+    image_url: false,
     owner: "1",
     read: "0",
     hasUnreadMessages: faker.random.boolean(),
@@ -18,12 +18,12 @@ function fakeChat(key) {
       "1": {
         id: "1",
         name: faker.name.findName(),
-        image_url: faker.image.imageUrl()
+        image_url: false
       },
       "2": {
         id: "2",
         name: faker.name.findName(),
-        image_url: faker.image.imageUrl()
+        image_url: false
       }
     },
     messages: []
@@ -36,7 +36,7 @@ $(document).ready(async () => {
   await Vue.nextTick();
   data.chat = {
     title: "test chat",
-    image_url: faker.image.imageUrl(),
+    image_url: false,
     owner: "1",
     read: "0",
     key: faker.random.uuid(),
@@ -44,12 +44,12 @@ $(document).ready(async () => {
       "1": {
         id: "1",
         name: faker.name.findName(),
-        image_url: faker.image.imageUrl()
+        image_url: false
       },
       "2": {
         id: "2",
         name: faker.name.findName(),
-        image_url: faker.image.imageUrl()
+        image_url: false
       }
     },
     messages: []
@@ -120,7 +120,7 @@ $(document).ready(async () => {
     [data.chat.key]: data.chat,
     [key2]: {
       title: faker.random.words(5),
-      image_url: faker.image.imageUrl(),
+      image_url: false,
       owner: "1",
       read: "0",
       key: key2,
@@ -128,12 +128,12 @@ $(document).ready(async () => {
         "1": {
           id: "1",
           name: faker.name.findName(),
-          image_url: faker.image.imageUrl()
+          image_url: false
         },
         "2": {
           id: "2",
           name: faker.name.findName(),
-          image_url: faker.image.imageUrl()
+          image_url: false
         }
       },
       messages: []
@@ -143,6 +143,22 @@ $(document).ready(async () => {
 
   data.online = ["1"];
   await Vue.nextTick();
+
+  // 50 messages
+  for (var i = 4; i < 54; i++) {
+    window.data.chat.messages.push({
+      id: String(i),
+      key: faker.random.uuid(),
+      timestamp: String(Math.floor(Date.now() / 1000)),
+      text: randomMessage(),
+      deleted: "0",
+      edited: "0",
+      chat_id: "1",
+      user_id: faker.random.arrayElement(["1", "2"])
+    });
+  }
+
+  // 50 chats
   const fiftyChats = {};
   for (var i = 0; i < 50; i++) {
     const id = faker.random.uuid();
