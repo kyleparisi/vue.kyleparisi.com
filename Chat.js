@@ -32,8 +32,11 @@ function groupMessagesByDay(messages) {
       byDate[time] = true;
       message.addAvatar = true;
       message.addDayDivider = time;
+      window.data.byDay[time] = window.data.byDay[time] || Vue.set(window.data.byDay, time, []);
+      window.data.byDay[time].push(message)
     } else {
       message.addDayDivider = false;
+      window.data.byDay[time].push(message)
     }
   });
 }
@@ -114,6 +117,8 @@ const ChatInput = {
       this.updateRead();
     },
     updateRead: function() {
+      console.log("Update read.")
+      this.$emit("update-read", {key: this.chat.key});
       Api.chat
         .updateRead(this.chat.key)
         .then(console.log)
@@ -220,87 +225,88 @@ const ChatMessages = {
     </div>
 
     <!-- Chat Body -->
-    <div class="ph2" v-for="message in chat.messages" v-show="!loading">
+    <div class="ph2" v-for="(messages, day) in byDay" v-show="!loading">
       <!-- Day Divider -->
-      <div v-if="message.addDayDivider">
-        <hr style="border: 1px #e7e7e8 solid" />
-        <div class="tc" style="position:relative;top:-19px;">
-          <span class="bg-passive ph3 br4">{{
-            parseTime(message.timestamp)
-          }}</span>
+      <div class="sticky top-0 bg-passive">
+        <div class="tc" style="position:relative;top:-2px;">
+          <div class="ph3 bg-passive f6 bb pv1" style="border-color: #e7e7e8;">{{
+            parseTime(day)
+          }}</div>
         </div>
       </div>
-
-      <div class="hover-bg-white">
-        <div v-if="message.addAvatar">
-          <div class="fl pt2" style="width: 37px">
-            <!-- Avatar -->
-            <img
-              class="w2 h2 br-100 v-mid"
-              :src="chat.users[message.user_id].image_url"
-              v-if="chat.users[message.user_id].image_url"
-              alt="avatar"
-            />
-            <img
-              src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
-              class="br-100 w2 h2 v-mid bg-black"
-              alt="default avatar"
-              v-else
-            />
-          </div>
-          <div class="dib b pr1 lh-copy">
-            {{ chat.users[message.user_id].name }}
-          </div>
-          <div class="dib gray fs14">
-            {{
-              new Date(message.timestamp * 1000).toLocaleTimeString("en-US", {
-                hour: "2-digit",
-                minute: "2-digit",
-                hour12: true
-              })
-            }}
-          </div>
-        </div>
-        <div>
-          <!-- New Message Flag -->
-          <div class="tc" v-show="newMessageId !== false">
-            <div
-              id="new_messages"
-              class="tc light-red br4 ph2 fs12 ba center dib"
-              v-if="newMessageId === message.id && !hidden"
-            >
-              New Messages
+      
+      <div v-for="message in messages">
+        <div class="hover-bg-white">
+          <div v-if="message.addAvatar">
+            <div class="fl pt2" style="width: 37px">
+              <!-- Avatar -->
+              <img
+                class="w2 h2 br-100 v-mid"
+                :src="chat.users[message.user_id].image_url"
+                v-if="chat.users[message.user_id].image_url"
+                alt="avatar"
+              />
+              <img
+                src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
+                class="br-100 w2 h2 v-mid bg-black"
+                alt="default avatar"
+                v-else
+              />
+            </div>
+            <div class="dib b pr1 lh-copy">
+              {{ chat.users[message.user_id].name }}
+            </div>
+            <div class="dib gray fs14">
+              {{
+                new Date(message.timestamp * 1000).toLocaleTimeString("en-US", {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  hour12: true
+                })
+              }}
             </div>
           </div>
-
-          <div
-            :title="
-              new Date(message.timestamp * 1000).toLocaleTimeString('en-US', {
-                hour: '2-digit',
-                minute: '2-digit',
-                hour12: true
-              })
-            "
-            class="lh-copy hover-bg-white"
-            style="padding-left: 37px"
-          >
+          <div>
+            <!-- New Message Flag -->
+            <div class="tc" v-show="newMessageId !== false">
+              <div
+                id="new_messages"
+                class="tc light-red br4 ph2 fs12 ba center dib"
+                v-if="newMessageId === message.id && !hidden"
+              >
+                New Messages
+              </div>
+            </div>
+  
             <div
-              :class="{ 'message-time': !message.addAvatar }"
-              :id="'message_' + message.id"
+              :title="
+                new Date(message.timestamp * 1000).toLocaleTimeString('en-US', {
+                  hour: '2-digit',
+                  minute: '2-digit',
+                  hour12: true
+                })
+              "
+              class="lh-copy hover-bg-white"
+              style="padding-left: 37px"
             >
-              {{ message.text }}
-              <!-- Message Time -->
-              <div class="fr" v-if="!message.addAvatar">
-                {{
-                  new Date(message.timestamp * 1000).toLocaleTimeString(
-                    "en-US",
-                    {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                      hour12: true
-                    }
-                  )
-                }}
+              <div
+                :class="{ 'message-time': !message.addAvatar }"
+                :id="'message_' + message.id"
+              >
+                {{ message.text }}
+                <!-- Message Time -->
+                <div class="fr" v-if="!message.addAvatar">
+                  {{
+                    new Date(message.timestamp * 1000).toLocaleTimeString(
+                      "en-US",
+                      {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        hour12: true
+                      }
+                    )
+                  }}
+                </div>
               </div>
             </div>
           </div>
@@ -362,6 +368,8 @@ const ChatMessages = {
       return day.toLocaleDateString("en-US", thisYearFormat);
     },
     updateRead: function() {
+      console.log("Update read.");
+      this.$emit("update-read", {key: this.chat.key});
       Api.chat
         .updateRead(this.chat.key)
         .then(console.log)
@@ -377,6 +385,7 @@ const ChatMessages = {
         const messagesEl = document.getElementById("messages");
         const originalScrollHeight = messagesEl.scrollHeight;
         const id = this._.keys(this._.keyBy(this.chat.messages, "id"))[0];
+        this.$emit("get-older-messages", {key: this.chat.key, message_id: id, originalScrollHeight: originalScrollHeight});
         Api.chat
           .getOlderMessages(this.chat.key, id)
           .then(res => res.data)
@@ -528,13 +537,14 @@ const Chat = {
     ChatList
   },
   watch: {
-    chat: groupMessages,
+    "chat.messages": groupMessages,
     "chat.read": groupMessages
   }
 };
 
 window.data = window.data || {};
 _.defaults(window.data, {
+  byDay: {},
   chat: false,
   chats: {},
   online: [],

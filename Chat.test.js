@@ -59,7 +59,7 @@ $(document).ready(async () => {
   window.data.chat.messages.push({
     id: "1",
     key: faker.random.uuid(),
-    timestamp: String(Math.floor(Date.now() / 1000) - 500),
+    timestamp: String(Math.floor(Date.now() / 1000) - (24 * 3600) - 500),
     text: randomMessage(),
     deleted: "0",
     edited: "0",
@@ -84,7 +84,7 @@ $(document).ready(async () => {
   window.data.chat.messages.push({
     id: "2",
     key: faker.random.uuid(),
-    timestamp: String(Math.floor(Date.now() / 1000) - 480),
+    timestamp: String(Math.floor(Date.now() / 1000) - (24 * 3600) - 480),
     text: randomMessage(),
     deleted: "0",
     edited: "0",
@@ -101,7 +101,7 @@ $(document).ready(async () => {
   window.data.chat.messages.push({
     id: "3",
     key: faker.random.uuid(),
-    timestamp: String(Math.floor(Date.now() / 1000) - 470),
+    timestamp: String(Math.floor(Date.now() / 1000) - (24 * 3600) - 470),
     text: randomMessage(),
     deleted: "0",
     edited: "0",
@@ -157,6 +157,7 @@ $(document).ready(async () => {
       user_id: faker.random.arrayElement(["1", "2"])
     });
   }
+  await Vue.nextTick();
 
   // 50 chats
   const fiftyChats = {};
