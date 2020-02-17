@@ -91,6 +91,7 @@ $(document).ready(async () => {
     chat_id: "1",
     user_id: "2"
   });
+  groupMessages();
   await Vue.nextTick();
   console.assert(
     document.getElementById("message_2") !== null,
@@ -157,6 +158,7 @@ $(document).ready(async () => {
       user_id: faker.random.arrayElement(["1", "2"])
     });
   }
+  groupMessages();
   await Vue.nextTick();
 
   // 50 chats

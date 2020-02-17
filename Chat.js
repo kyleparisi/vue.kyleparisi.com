@@ -537,7 +537,7 @@ const Chat = {
     ChatList
   },
   watch: {
-    "chat.messages": groupMessages,
+    "chat": groupMessages,
     "chat.read": groupMessages
   }
 };
