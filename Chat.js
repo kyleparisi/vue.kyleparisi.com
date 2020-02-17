@@ -58,6 +58,7 @@ function groupMessagesByUser(messages) {
   }, []);
 }
 function groupMessages() {
+  window.data.byDay = {};
   const messages = _.get(window, "data.chat.messages", false);
   if (!messages) {
     return false;
