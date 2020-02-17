@@ -172,7 +172,6 @@ const ChatListItem = {
     selectChat(chat) {
       this.chat = chat;
       this.loadedOldestMessage = false;
-      groupMessages();
       // scroll to bottom since new chat selected
       this.$nextTick(() => {
         document.getElementById("side-navigation").classList.toggle("dn");
@@ -243,7 +242,7 @@ const ChatMessages = {
               <img
                 class="w2 h2 br-100 v-mid"
                 :src="chat.users[message.user_id].image_url"
-                v-if="chat.users[message.user_id].image_url"
+                v-if="_.get(chat, ['users', message.user_id, 'image_url'], false)"
                 alt="avatar"
               />
               <img
