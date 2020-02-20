@@ -415,6 +415,27 @@ const ChatMessages = {
   }
 };
 
+const ChatSettings = {
+  template: `
+<div>
+  <div class="relative z-2">
+    <div class="w4 tc white bg-gray bn f6 br2 brand-shadow2">
+      <div class="tr bb pr2" @click="settingsPaneOpen = false;">
+        x
+      </div>
+      <div class="br2 dim light-red" @click="$emit('leave-chat')">
+        Leave chat
+      </div>
+    </div>
+  </div>
+  <div class="fixed top-0 bottom-0 left-0 right-0 z-1" @click="settingsPaneOpen = false;"></div>
+</div>
+`,
+  data: function() {
+    return window.data
+  }
+};
+
 const ChatTitle = {
   template: `
 <div>
@@ -432,8 +453,8 @@ const ChatTitle = {
       </div>
     </div>
 
-    <div class="pl3" @click="visitProject" v-if="chat">
-      <div class="">
+    <div class="pl3" v-if="chat">
+      <div class="fl" @click="visitProject">
         <div class="ttc pb1">{{ chat.title }}</div>
         <div class="fw2 f6 flex items-center">
           <div class="flex items-center" v-for="user in user_states">
@@ -459,6 +480,13 @@ const ChatTitle = {
           </div>
         </div>
       </div>
+      <div class="fr db pointer gray" style="line-height: 38px;">
+        <div v-show="settingsPaneOpen === false" class="f3 fr" @click="settingsPaneOpen = true">☲</div>
+        
+        <ChatSettings v-if="settingsPaneOpen"
+            v-on:leave-chat="$emit('leave-chat')"
+        ></ChatSettings>
+      </div>
     </div>
   </div>
 </div>`,
@@ -476,7 +504,7 @@ const ChatTitle = {
       const withUsers = this.withUsers;
       const states = withUsers.map(user_id => {
         const typing = this.typing.indexOf(withUsers[user_id] + '_' + chat.key) !== -1 &&
-            this.online.indexOf(withUsers[user_id]) !== -1;
+          this.online.indexOf(withUsers[user_id]) !== -1;
         const online = this.online.indexOf(withUsers[user_id]) !== -1
         return {
           typing: typing,
@@ -491,6 +519,9 @@ const ChatTitle = {
     visitProject: function() {
       window.parent.location.href = this.chat.url;
     }
+  },
+  components: {
+    ChatSettings
   }
 };
 
@@ -517,7 +548,9 @@ const Chat = {
     </div>
   </nav>
 
-  <ChatTitle></ChatTitle>
+  <ChatTitle
+    v-on:leave-chat="$emit('leave-chat')"
+  ></ChatTitle>
 
   <main class="main-padding">
     <div id="chat" class="min-vh-100 bg-passive">
@@ -553,7 +586,8 @@ _.defaults(window.data, {
   typing: [],
   chatHeight: 400,
   loadedOldestMessage: false,
-  newMessageId: false
+  newMessageId: false,
+  settingsPaneOpen: false
 });
 
 Object.defineProperty(Vue.prototype, "_", { value: _ });
