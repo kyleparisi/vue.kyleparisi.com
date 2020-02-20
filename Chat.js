@@ -237,7 +237,7 @@ const ChatMessages = {
       
       <div v-for="message in messages">
         <div class="hover-bg-white">
-          <div v-if="message.addAvatar">
+          <div v-if="message.addAvatar && !message.system">
             <div class="fl pt2" style="width: 37px">
               <!-- Avatar -->
               <img
@@ -278,6 +278,11 @@ const ChatMessages = {
               </div>
             </div>
   
+            <!-- System message -->
+            <div class="tc f6 gray" v-if="message.system">
+              {{ message.text }}
+            </div>
+            <!-- User message -->
             <div
               :title="
                 new Date(message.timestamp * 1000).toLocaleTimeString('en-US', {
@@ -288,6 +293,7 @@ const ChatMessages = {
               "
               class="lh-copy hover-bg-white"
               style="padding-left: 37px"
+              v-else
             >
               <div
                 :class="{ 'message-time': !message.addAvatar }"
