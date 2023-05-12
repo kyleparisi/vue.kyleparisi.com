@@ -6,14 +6,14 @@ function sortAndFilter(key) {
   if (this.pageSize) {
     params["page_size"] = this.pageSize
   }
-  const base = "https://example.com/hello"
+  const base = settings.apiBase
   console.log(this, key)
   let url = `${base}`
 
   const runRequest = async () => {
     data.loading = true
     const param_str = "?" + Object.keys(params).map(key => `${key}=${params[key]}`).join("&")
-    const response = await ky.get(url + param_str, {headers: {'accept': 'application/json', 'authorization': 'Bearer: JWT beepboop'}})
+    const response = await ky.get(url + param_str, {headers: settings.apiHeaders})
     const json = await response.json()
     data.count = json.count
     data.gridData = json.results
