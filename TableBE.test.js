@@ -96,6 +96,7 @@ function sortAndFilter(key) {
 
   return log;
 }
+const debounceSortAndFilter = _.debounce(sortAndFilter, 1000);
 
 data.mapping = {
   name: "client_name",

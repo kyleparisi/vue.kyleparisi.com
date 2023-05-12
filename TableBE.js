@@ -84,7 +84,7 @@ Vue.component("table-component", {
                                 {{ filter.name }} {{ filter.operator }} {{ filter.value }}
                             </span>
                             <span v-if="filter.type === 'search'">
-                                <i class="fa fa-search mh1"></i> {{ filter.name }} contains "{{ filter.value }}"
+                                <i class="fa fa-search mh1"></i> {{ filter.name }} contains: <input class="input h2" v-model="filter.value" v-on:keyup="refreshSearch" type="text">
                             </span>
                             <span v-if="filter.type === 'enumerated'">
                                 <i class="fa fa-list-ul mh1"></i> {{ filter.name }} is {{ filter.values.join(",") }}
@@ -481,6 +481,12 @@ Vue.component("table-component", {
         this.page = page;
       }
       const log = sortAndFilter.call(this);
+      if (window.debug) {
+        console.log(log);
+      }
+    },
+    refreshSearch: function () {
+      const log = debounceSortAndFilter.call(this, true)
       if (window.debug) {
         console.log(log);
       }
