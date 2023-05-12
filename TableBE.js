@@ -411,7 +411,8 @@ Vue.component("table-component", {
   },
   watch: {
     filters: function(val) {
-      console.log(sortAndFilter.call(this));
+      console.log(val)
+      sortAndFilter.call(this, val);
     },
     searchTerm: function(val) {
       if (!this.search) {
@@ -439,7 +440,7 @@ Vue.component("table-component", {
     formatMapping: Object,
     cellStyleMapping: Object,
     headingStyleMapping: Object,
-    filterMapping: Object,
+    filterMapping: Array,
     search: Function,
     searchTerm: String,
     viewMapping: Object,

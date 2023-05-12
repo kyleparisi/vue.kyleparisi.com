@@ -7,7 +7,6 @@ function sortAndFilter(key) {
     params["page_size"] = this.pageSize
   }
   const base = settings.apiBase
-  console.log(this, key)
   let url = `${base}`
 
   const runRequest = async () => {
@@ -57,7 +56,7 @@ function sortAndFilter(key) {
     this.sortCounter = 0;
   }
 
-  if (this.sortKey !== "") {
+  if (typeof this.sortKey == "string" && this.sortKey !== "") {
     const reverseKey = this.reverse ? "-" : ""
     params["ordering"] = `${reverseKey}${this.sortKey}`
   }
@@ -69,9 +68,31 @@ function sortAndFilter(key) {
   }
 
   log += "Done sorting, apply filters\n";
+  // filter.value(s) will always be strings
+  this.filters.map(filter => {
+    const key = filter.key || filter.name;
+    switch (filter.type) {
+      case "enumerated":
+        log += "Apply enumerated filter.\n";
+        break;
+      case "number":
+        log += "Apply number filter.\n";
+        break;
+      case "search":
+        log += "Apply search filter.\n";
+        console.log("search", filter)
+        params["search"] = filter.value
+        params["search_fields"] = filter.key
+        break;
+      case "custom":
+        log += "Apply custom filter.\n";
+        break;
+    }
+  });
 
   log += "Reset page to 1 to apply filters.\n";
   _.set(this, "page", 1);
+  runRequest()
 
   return log;
 }
@@ -102,6 +123,11 @@ data.formatMapping = {
   aum: formatMoney,
   cash: formatMoney
 };
+data.filterMapping = [{
+  "name": "Account Number",
+  "key": "account_number",
+  "type": "search"
+}]
 
 window.debug = true
 window.addEventListener('load', function () {
